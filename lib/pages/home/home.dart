@@ -9,6 +9,8 @@ import 'package:scoped_model/scoped_model.dart';
 // ignore: unused_import
 import 'package:tester/app-model.dart';
 
+import 'package:tester/util/controller_widget.dart';
+
 // ignore: non_constant_identifier_names
  HomePage({ AppModel model,  }) {
   final widget = MaterialApp(
@@ -31,6 +33,14 @@ import 'package:tester/app-model.dart';
                     'You have pushed:'
                   ),
                   margin: EdgeInsets.only(top: 100.0)
+                ),
+                Control(
+                  duration: Duration(seconds: 5,),
+                  autoStart: true,
+                  builder: (controller) {
+                    print('returning text!');
+                    return Text('Controller value is now ${controller.value}');
+                  },
                 ),
                 DefaultTextStyle(
                   child: Container(
