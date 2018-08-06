@@ -12,18 +12,13 @@ home-page(flutter-view model='AppModel')
 					column
 						.message You have pushed:
 						.counter ${model.counter} times
-						anim-controller(name='controller' duration=200 auto-start=true :on-create='model.startAnim')
-							animated-builder
-								assign(as='animation' :value='find')
-								function(as='builder' params='context, widget')
-									assign(name='animatedHeight' :value='Tween(begin: 0.0, end: 300.0)')
-									container(:height='animatedHeight')
+						anim-controller(duration=200 auto-start=true :on-create='model.startAnim')
+							function(as='builder')
 
-						animated-builder
-							anim-controller(as='animation' duration=200 auto-start=true :on-create='model.startAnim')
-								animation(as='animation' :tween='Tween(begin: 0.0, end: 300.0)')
-								function(as='builder' params='context, widget')
-									container(:height='animation')
+
+						//- animated-builder
+						//- 	anim-controller(as='animation' duration=200 auto-start=true :on-create='model.startAnim')
+								//- animation(as='animation' :tween='Tween(begin: 0.0, end: 300.0)')
 
 				floating-action-button(
 					as='floatingActionButton'

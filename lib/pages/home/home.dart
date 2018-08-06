@@ -34,7 +34,7 @@ import 'package:tester/util/controller_widget.dart';
                   ),
                   margin: EdgeInsets.only(top: 100.0)
                 ),
-                Control(
+                AnimController(
                   duration: Duration(seconds: 5,),
                   autoStart: true,
                   builder: (controller) {

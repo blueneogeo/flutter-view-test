@@ -11,20 +11,20 @@ import 'package:tester/app-model.dart';
 
 typedef Widget AnimationControlledBuilder(AnimationController controller);
 
-class Control extends StatefulWidget {
+class AnimController extends StatefulWidget {
   final Duration duration;
   final AnimationControlledBuilder builder;
   final bool autoStart;
 
-  Control({@required this.duration, @required this.builder, this.autoStart = false});
+  AnimController({@required this.duration, @required this.builder, this.autoStart = false});
 
   @override
-  State<Control> createState() {
+  State<AnimController> createState() {
     return _ControlState(duration: duration, builder: builder, autoStart: autoStart);
   }
 }
 
-class _ControlState extends State<Control> with SingleTickerProviderStateMixin {
+class _ControlState extends State<AnimController> with SingleTickerProviderStateMixin {
   final Duration duration;
   final AnimationControlledBuilder builder;
   final bool autoStart;
@@ -38,7 +38,6 @@ class _ControlState extends State<Control> with SingleTickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(duration: duration, vsync: this);
     if(autoStart) _controller.forward();
-    print('created controller $_controller');
   }
 
   @override
