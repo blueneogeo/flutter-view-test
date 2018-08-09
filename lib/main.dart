@@ -3,14 +3,11 @@ import 'package:tester/app-model.dart';
 import 'package:tester/pages/home/home.dart';
 
 void main() {
-  runApp(App());
+  runApp(TestApp());
 }
 
-class App extends StatelessWidget {
-
-  final appModel = AppModel();
-  
+class TestApp extends StatelessWidget {
+  final model = AppModel();
   @override
-  build(context) => HomePage(model: appModel);
-
+  build(context) => HomePage(model: model);
 }
