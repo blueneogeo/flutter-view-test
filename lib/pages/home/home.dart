@@ -28,84 +28,29 @@ import 'package:tester/util/controller_widget.dart';
           builder: (context, widget, model) {
             return Column(
               children: __flatten([
+                Container(
+                  child: Text(
+                    'You have pushed:'
+                  ),
+                  margin: EdgeInsets.only(top: (100).toDouble())
+                ),
                 AnimatedSwitcher(
-                  duration: Duration(milliseconds:100),
+                  duration: Duration(milliseconds: 500),
                   child: Container(
                     key: ValueKey(model.counter),
-                    child: Column(
-                      children: __flatten([
-                        Container(
-                          child: Text(
-                            'You have pushed:'
-                          ),
-                          margin: EdgeInsets.only(top: (100).toDouble())
+                    child: DefaultTextStyle(
+                      child: Container(
+                        child: Text(
+                          '${model.counter} times!'
                         ),
-                        DefaultTextStyle(
-                          child: Container(
-                            child: Text(
-                              '${model.counter} times!'
-                            ),
-                            margin: EdgeInsets.only(top: (30).toDouble())
-                          ),
-                          style: TextStyle(
-                            fontSize: (25).toDouble(),
-                            color: Colors.black
-                          )
-                        )
-                      ])
+                        margin: EdgeInsets.only(top: (30).toDouble())
+                      ),
+                      style: TextStyle(
+                        fontSize: (25).toDouble(),
+                        color: Colors.black
+                      )
                     )
                   )
-                ),
-                AnimatedCrossFade(
-                  duration: Duration(seconds:1),
-                  crossFadeState: model.getFadeState(),
-                  firstChild: Text(
-                    'Hello!'
-                  ),
-                  secondChild: Text(
-                    'Hello Again!'
-                  )
-                ),
-                DefaultTextStyle(
-                  child: AnimatedContainer(
-                    duration: Duration(seconds:1),
-                    curve: Curves.easeIn,
-                    child: Column(
-                      children: __flatten([
-                        Text(
-                          'Just some text here'
-                        )
-                      ])
-                    ),
-                    margin: EdgeInsets.only(top: (model.counter*10).toDouble())
-                  ),
-                  style: TextStyle(
-                    color: Colors.black
-                  )
-                ),
-                AnimController(
-                  duration: 1000,
-                  onCreated: model.onAnimCreated,
-                  builder: (controller, child) {
-                    return Column(
-                      children: __flatten([
-                        Container(
-                          child: Text(
-                            'animated: ${animate(controller, begin:1.0, end:10.0, curve: Curves.ease)}'
-                          ),
-                          margin: EdgeInsets.only(top: (50).toDouble())
-                        ),
-                        Container()
-                      ])
-                    );
-                  },
-                  child: true ?
-                    // ignore: dead_code
-                    Text(
-                      'This part is not animated'
-                    )
-                  // ignore: dead_code
-                  : Container()
                 )
               ])
             );

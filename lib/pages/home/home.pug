@@ -10,37 +10,10 @@ home-page(flutter-view model='AppModel')
 				#title(as='title') Welcome
 			center(as='body')
 				scoped(model='AppModel')
-					column
-						animated-switcher(:duration='Duration(milliseconds:100)')
-							.switched(:key='ValueKey(model.counter)')
-								.message You have pushed:
-								.counter ${model.counter} times!
-
-						animated-cross-fade(
-							:duration='Duration(seconds:1)'
-							:cross-fade-state='model.getFadeState()')
-							text(as='firstChild' value='Hello!')
-							text(as='secondChild' value='Hello Again!')
-
-						animated-container(
-							:duration='Duration(seconds:1)'
-							:curve='Curves.easeIn').animated
-							column
-								| Just some text here
-
-						//- anim-controller(:duration=1000 :on-created='model.onAnimCreated')
-						//- 	function(as='builder' params='controller, child')
-						//- 		.values
-						//- 			| Height value: ${animate(controller, begin:1.0, end:50.0, curve: Curves.ease)}
-						anim-controller(:duration=1000 :on-created='model.onAnimCreated')
-							function(as='builder' params='controller, child')
-								column
-									.values 
-										| animated: ${animate(controller, begin:1.0, end:10.0, curve: Curves.ease)}
-									slot(:value='child')
-							slot(as='child')
-								| This part is not animated		
-
+					.message You have pushed:
+					animated-switcher(:duration-ms=500)
+						.switched(:key='ValueKey(model.counter)')
+							.counter ${model.counter} times!
 
 			floating-action-button#btn(
 				as='floatingActionButton'

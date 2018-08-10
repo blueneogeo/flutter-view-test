@@ -10,137 +10,109 @@ import 'package:scoped_model/scoped_model.dart';
 // ignore: unused_import
 import 'package:tester/app-model.dart';
 
-typedef Widget AnimControlledBuilder(AnimationController controller, Widget child);
-typedef void OnCreatedAnimationController(AnimationController controller);
+double animate(AnimationController controller,
+    {double begin = 0.0, double end = 100.0, Curve curve = Curves.linear}) {
+  return Tween(begin: begin, end: end)
+      .chain(CurveTween(curve: curve))
+      .animate(controller)
+      .value;
+}
 
-class AnimController extends StatefulWidget {
+/// A [Model] that uses an [AnimationController] to animate its properties.
+/// When the [AnimationController] updates, notifyListeners is called on the model.
+abstract class AnimatedModel extends Model {
+
+  AnimationController controller;
+
+  AnimatedModel(this.controller) : assert(controller != null) {
+    controller.addListener(() => this.notifyListeners());
+  }
+
+}
+
+typedef T ModelFn<T extends AnimatedModel>(AnimationController controller);
+typedef Widget AnimatedModelBuilder<T extends AnimatedModel>(BuildContext context, Widget widget, T model);
+
+class AnimatedModelController<T extends AnimatedModel> extends StatefulWidget {
   /// the amount of time in milliseconds that the controller takes to animate
-  final int duration;
+  final Duration duration;
 
   /// the builder function that gets called for every tick
-  final AnimControlledBuilder builder;
+  final AnimatedModelBuilder<T> builder;
 
   /// if true, automatically start the animation
   final bool autoStart;
 
-  /// optional listener for the creation of the controller
-  final OnCreatedAnimationController onCreated;
+  final ModelFn<T> modelFn;
 
   final Widget child;
 
-  AnimController({
+  AnimatedModelController({
     Key key,
     @required this.duration,
+    @required this.modelFn,
     @required this.builder,
-    this.child,
     this.autoStart = false,
-    this.onCreated,
-  }) : assert(duration != null),
-       assert(builder != null),
-       super(key: key);
+    this.child
+  })  : assert(duration != null),
+        assert(modelFn != null),
+        super(key: key);
 
   @override
-  State<AnimController> createState() {
-    return _AnimController(
-      duration: Duration(milliseconds: duration),
-      builder: builder,
-      autoStart: autoStart,
-      child: child,
-      onCreated: onCreated,
-    );
-  }
+  createState() => _AnimationModelState<T>(
+    duration: duration,
+    builder: builder,
+    autoStart: autoStart,
+    modelFn: modelFn,
+    child: child
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(new IntProperty('duration', duration, unit: 'ms'));
+    properties.add(new IntProperty('duration', duration.inMilliseconds, unit: 'ms'));
   }
 }
 
-class _AnimController extends State<AnimController>
+class _AnimationModelState<T extends AnimatedModel> extends State<AnimatedModelController<T>>
     with TickerProviderStateMixin {
+
   Duration duration;
-  AnimControlledBuilder builder;
+  ModelFn<T> modelFn;
+  AnimatedModelBuilder<T> builder;
   bool autoStart;
   Widget child;
-  OnCreatedAnimationController onCreated;
 
+  T _model;
   AnimationController _controller;
+  VoidCallback _updateStateFn;
 
-  _AnimController({
+  _AnimationModelState({
     @required this.duration,
+    @required this.modelFn,
     @required this.builder,
-    this.child,
     this.autoStart,
-    this.onCreated,
+    this.child
   });
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(duration: duration, vsync: this);
-    if (onCreated != null) {
-      onCreated(_controller);
-    }
+    _updateStateFn = () => this.setState((){});
+    _model = modelFn(_controller);
+    _model.addListener(_updateStateFn);
     if (autoStart) _controller.forward().orCancel;
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, widget) {
-        return this.builder(_controller, child);
-      },
-      child: child,
-    );
-  }
-
+  build(context) => builder(context, child, _model);
+  
   @override
   void dispose() {
+    _model.removeListener(_updateStateFn);
     _controller.dispose();
     super.dispose();
   }
-}
 
-// ANIMATION
-
-class AnimationBuilder extends StatefulWidget {
-  final AnimationController controller;
-  final Tween<double> tween;
-  final AnimationBuilderBuilder builder;
-
-  AnimationBuilder({
-    @required this.controller,
-    @required this.tween,
-    @required this.builder,
-  });
-
-  @override
-  State<StatefulWidget> createState() {
-    return _AnimationBuilderState(controller, tween, builder);
-  }
-}
-
-typedef Widget AnimationBuilderBuilder(Animation<double> animation);
-
-class _AnimationBuilderState extends State<AnimationBuilder> {
-  AnimationController controller;
-  Tween<double> tween;
-  AnimationBuilderBuilder builder;
-
-  _AnimationBuilderState(this.controller, this.tween, this.builder);
-
-  @override
-  Widget build(BuildContext context) {
-    Animation<double> animation = tween.animate(controller);
-    return builder(animation);
-  }
-}
-
-double animate(AnimationController controller, { double begin = 0.0, double end = 100.0, Curve curve = Curves.linear }) {
-  return Tween(begin: begin, end: end)
-    .chain(CurveTween(curve: curve))
-    .animate(controller)
-    .value;
 }

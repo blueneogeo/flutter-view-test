@@ -1,0 +1,15 @@
+import(package='tester/test-model.dart')
+import(package='flutter_platform_widgets/flutter_platform_widgets.dart')
+import(package='scoped_model/scoped_model.dart')
+
+test-page(flutter-view model='TestModel')
+	material-app(title='Flutter Demo!')
+		scaffold(as='home')
+			app-bar(as='appBar')
+				#title(as='title') Welcome
+			center(as='body')
+				scoped(model='TestModel')
+					animated-container(:duration-ms=200).message
+						| Count: ${model.counter}
+						platform-button(@on-pressed='model.incrementCounter()') increase
+						platform-button(@on-pressed='model.decrementCounter()') decrease
