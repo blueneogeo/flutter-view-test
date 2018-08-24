@@ -59,13 +59,7 @@ class AnimatedModelController<T extends AnimatedModel> extends StatefulWidget {
         super(key: key);
 
   @override
-  createState() => _AnimationModelState<T>(
-    duration: duration,
-    builder: builder,
-    autoStart: autoStart,
-    modelFn: modelFn,
-    child: child
-  );
+  createState() => _AnimationModelState<T>();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -77,36 +71,22 @@ class AnimatedModelController<T extends AnimatedModel> extends StatefulWidget {
 class _AnimationModelState<T extends AnimatedModel> extends State<AnimatedModelController<T>>
     with TickerProviderStateMixin {
 
-  Duration duration;
-  ModelFn<T> modelFn;
-  AnimatedModelBuilder<T> builder;
-  bool autoStart;
-  Widget child;
-
   T _model;
   AnimationController _controller;
   VoidCallback _updateStateFn;
 
-  _AnimationModelState({
-    @required this.duration,
-    @required this.modelFn,
-    @required this.builder,
-    this.autoStart,
-    this.child
-  });
-
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: duration, vsync: this);
+    _controller = AnimationController(duration: this.widget.duration, vsync: this);
     _updateStateFn = () => this.setState((){});
-    _model = modelFn(_controller);
+    _model = this.widget.modelFn(_controller);
     _model.addListener(_updateStateFn);
-    if (autoStart) _controller.forward().orCancel;
+    if (this.widget.autoStart) _controller.forward().orCancel;
   }
 
   @override
-  build(context) => builder(context, child, _model);
+  build(context) => this.widget.builder(context, this.widget.child, _model);
   
   @override
   void dispose() {
