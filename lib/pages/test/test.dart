@@ -62,7 +62,6 @@ import 'package:scoped_model/scoped_model.dart';
     ScopedModel<TestModel>(model: model, child: widget) 
     : widget;
 }
-
 // ignore: unused_element
 __flatten(List list) {
   return List<Widget>.from(list.expand((item) {

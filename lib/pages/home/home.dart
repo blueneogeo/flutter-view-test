@@ -10,10 +10,12 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:tester/app-model.dart';
 // ignore: unused_import
 import 'package:tester/util/controller_widget.dart';
+// ignore: unused_import
+import 'package:tester/util/reactive.dart';
 
 // ignore: non_constant_identifier_names
- HomePage({ AppModel model,  }) {
-  final widget = MaterialApp(
+MaterialApp HomePage({ @required app }) {
+  return MaterialApp(
     title: 'Flutter Demo!',
     home: Scaffold(
       appBar: AppBar(
@@ -24,53 +26,44 @@ import 'package:tester/util/controller_widget.dart';
         )
       ),
       body: Center(
-        child: ScopedModelDescendant<AppModel>(
-          builder: (context, widget, model) {
-            return Column(
-              children: __flatten([
-                Container(
-                  child: Text(
+        child: Reactive(
+          model: app,
+          builder: (context, model) {
+            return Container(
+              child: Column(
+                children: __flatten([
+                  Text(
                     'You have pushed:'
                   ),
-                  margin: EdgeInsets.only(top: (100).toDouble())
-                ),
-                AnimatedSwitcher(
-                  duration: Duration(milliseconds: 500),
-                  child: Container(
-                    key: ValueKey(model.counter),
-                    child: DefaultTextStyle(
-                      child: Container(
-                        child: Text(
-                          '${model.counter} times!'
-                        ),
-                        margin: EdgeInsets.only(top: (30).toDouble())
+                  DefaultTextStyle(
+                    child: Container(
+                      child: Text(
+                        '${model.counter} times!'
                       ),
-                      style: TextStyle(
-                        fontSize: (25).toDouble(),
-                        color: Colors.black
-                      )
+                      margin: EdgeInsets.only(top: (30).toDouble())
+                    ),
+                    style: TextStyle(
+                      fontSize: (25).toDouble(),
+                      color: Colors.black
                     )
                   )
-                )
-              ])
+                ])
+              ),
+              margin: EdgeInsets.only(top: (100).toDouble())
             );
           }
         )
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment',
-        onPressed: () { model.incrementCounter(); },
+        onPressed: () { app.incrementCounter(); },
         child: Icon(
           Icons.add
         )
       )
     )
   );
-  return (model != null) ?
-    ScopedModel<AppModel>(model: model, child: widget) 
-    : widget;
 }
-
 // ignore: unused_element
 __flatten(List list) {
   return List<Widget>.from(list.expand((item) {
