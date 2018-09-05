@@ -10,10 +10,12 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:tester/app-model.dart';
 // ignore: unused_import
 import 'package:tester/util/controller_widget.dart';
+// ignore: unused_import
+import 'package:tester/util/reactive-model.dart';
 
 // ignore: non_constant_identifier_names
- AnimationsPage({ AppModel model,  }) {
-  final widget = MaterialApp(
+MaterialApp AnimationsPage({ model }) {
+  return MaterialApp(
     title: 'Flutter Demo!',
     home: Scaffold(
       appBar: AppBar(
@@ -24,8 +26,9 @@ import 'package:tester/util/controller_widget.dart';
         )
       ),
       body: Center(
-        child: ScopedModelDescendant<AppModel>(
-          builder: (context, widget, model) {
+        child: ReactiveModel(
+          model: model,
+          builder: (context, model) {
             return Column(
               children: __flatten([
                 AnimatedSwitcher(
@@ -125,9 +128,6 @@ import 'package:tester/util/controller_widget.dart';
       )
     )
   );
-  return (model != null) ?
-    ScopedModel<AppModel>(model: model, child: widget) 
-    : widget;
 }
 // ignore: unused_element
 __flatten(List list) {

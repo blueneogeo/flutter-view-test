@@ -11,10 +11,10 @@ import 'package:tester/app-model.dart';
 // ignore: unused_import
 import 'package:tester/util/controller_widget.dart';
 // ignore: unused_import
-import 'package:tester/util/reactive.dart';
+import 'package:tester/util/reactive-model.dart';
 
 // ignore: non_constant_identifier_names
-MaterialApp HomePage({ @required app }) {
+MaterialApp HomePage({ app }) {
   return MaterialApp(
     title: 'Flutter Demo!',
     home: Scaffold(
@@ -26,7 +26,7 @@ MaterialApp HomePage({ @required app }) {
         )
       ),
       body: Center(
-        child: Reactive(
+        child: ReactiveModel(
           model: app,
           builder: (context, model) {
             return Container(

@@ -10,8 +10,8 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 // ignore: non_constant_identifier_names
- TestPage({ TestModel model,  }) {
-  final widget = MaterialApp(
+MaterialApp TestPage() {
+  return MaterialApp(
     title: 'Flutter Demo!',
     home: Scaffold(
       appBar: AppBar(
@@ -58,9 +58,6 @@ import 'package:scoped_model/scoped_model.dart';
       )
     )
   );
-  return (model != null) ?
-    ScopedModel<TestModel>(model: model, child: widget) 
-    : widget;
 }
 // ignore: unused_element
 __flatten(List list) {
