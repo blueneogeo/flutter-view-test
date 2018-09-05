@@ -69,23 +69,6 @@ MaterialApp AnimationsPage({ model }) {
                     'Hello Again!'
                   )
                 ),
-                DefaultTextStyle(
-                  child: AnimatedContainer(
-                    curve: Curves.easeIn,
-                    duration: Duration(seconds: 1),
-                    child: Column(
-                      children: __flatten([
-                        Text(
-                          'Just some text here'
-                        )
-                      ])
-                    ),
-                    margin: EdgeInsets.only(top: (model.counter*10).toDouble())
-                  ),
-                  style: TextStyle(
-                    color: Colors.black
-                  )
-                ),
                 AnimatedModelController<SomeAnimationModel>(
                   duration: Duration(seconds: 1),
                   modelFn: model.createHeightAnimModel,

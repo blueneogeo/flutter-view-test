@@ -21,10 +21,6 @@ animations-page(flutter-view :model)
 							text(as='firstChild' value='Hello!')
 							text(as='secondChild' value='Hello Again!')
 
-						animated-container(:duration-sec=1 :curve='Curves.easeIn').animated
-							column
-								| Just some text here
-
 						scoped-animation(:duration-sec=1 model='SomeAnimationModel' model-fn='model.createHeightAnimModel')
 								platform-button(@on-pressed='anim.controller.forward()') forward
 								platform-button(@on-pressed='anim.controller.reverse()') reverse
