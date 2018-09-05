@@ -14,7 +14,7 @@ import 'package:tester/util/controller_widget.dart';
 import 'package:tester/util/reactive-model.dart';
 
 // ignore: non_constant_identifier_names
-MaterialApp HomePage({ app }) {
+MaterialApp HomePage({ model }) {
   return MaterialApp(
     title: 'Flutter Demo!',
     home: Scaffold(
@@ -27,7 +27,7 @@ MaterialApp HomePage({ app }) {
       ),
       body: Center(
         child: ReactiveModel(
-          model: app,
+          model: model,
           builder: (context, model) {
             return Container(
               child: Column(
@@ -56,7 +56,7 @@ MaterialApp HomePage({ app }) {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment',
-        onPressed: () { app.incrementCounter(); },
+        onPressed: () { model.incrementCounter(); },
         child: Icon(
           Icons.add
         )

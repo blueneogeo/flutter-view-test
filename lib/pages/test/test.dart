@@ -8,9 +8,11 @@ import 'package:tester/test-model.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 // ignore: unused_import
 import 'package:scoped_model/scoped_model.dart';
+// ignore: unused_import
+import 'package:tester/util/reactive-model.dart';
 
 // ignore: non_constant_identifier_names
-MaterialApp TestPage() {
+MaterialApp TestPage({ model }) {
   return MaterialApp(
     title: 'Flutter Demo!',
     home: Scaffold(
@@ -22,8 +24,9 @@ MaterialApp TestPage() {
         )
       ),
       body: Center(
-        child: ScopedModelDescendant<TestModel>(
-          builder: (context, widget, model) {
+        child: ReactiveModel(
+          model: model,
+          builder: (context, model) {
             return DefaultTextStyle(
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 200),
