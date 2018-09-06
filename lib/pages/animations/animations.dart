@@ -15,42 +15,42 @@ import 'package:tester/util/reactive-model.dart';
 
 // ignore: non_constant_identifier_names
 MaterialApp AnimationsPage({ model }) {
-  return MaterialApp(
+  return MaterialApp( // project://lib/pages/animations/animations.pug#8,2
     title: 'Flutter Demo!',
-    home: Scaffold(
-      appBar: AppBar(
-        title: Container(
-          child: Text(
+    home: Scaffold( // project://lib/pages/animations/animations.pug#9,3
+      appBar: AppBar( // project://lib/pages/animations/animations.pug#10,4
+        title: Container( // project://lib/pages/animations/animations.pug#11,5
+          child: Text( 
             'Welcome'
           )
         )
       ),
-      body: Center(
-        child: ReactiveModel(
+      body: Center( // project://lib/pages/animations/animations.pug#12,4
+        child: ReactiveModel( // project://lib/pages/animations/animations.pug#13,5
           model: model,
           builder: (context, model) {
-            return Column(
+            return Column( // project://lib/pages/animations/animations.pug#14,6
               children: __flatten([
-                AnimatedSwitcher(
+                AnimatedSwitcher( // project://lib/pages/animations/animations.pug#15,7
                   duration: Duration(milliseconds: 100),
-                  child: Container(
+                  child: Container( // project://lib/pages/animations/animations.pug#16,8
                     key: ValueKey(model.counter),
-                    child: Column(
+                    child: Column( 
                       children: __flatten([
-                        Container(
-                          child: Text(
+                        Container( // project://lib/pages/animations/animations.pug#17,9
+                          child: Text( 
                             'You have pushed:'
                           ),
                           margin: EdgeInsets.only(top: (100).toDouble())
                         ),
-                        DefaultTextStyle(
-                          child: Container(
-                            child: Text(
+                        DefaultTextStyle( 
+                          child: Container( // project://lib/pages/animations/animations.pug#18,9
+                            child: Text( 
                               '${model.counter} times!'
                             ),
                             margin: EdgeInsets.only(top: (30).toDouble())
                           ),
-                          style: TextStyle(
+                          style: TextStyle( 
                             fontSize: (25).toDouble(),
                             color: Colors.black
                           )
@@ -59,36 +59,36 @@ MaterialApp AnimationsPage({ model }) {
                     )
                   )
                 ),
-                AnimatedCrossFade(
+                AnimatedCrossFade( // project://lib/pages/animations/animations.pug#20,7
                   crossFadeState: model.getFadeState(),
                   duration: Duration(seconds: 1),
-                  firstChild: Text(
+                  firstChild: Text( // project://lib/pages/animations/animations.pug#21,8
                     'Hello!'
                   ),
-                  secondChild: Text(
+                  secondChild: Text( // project://lib/pages/animations/animations.pug#22,8
                     'Hello Again!'
                   )
                 ),
-                AnimatedModelController<SomeAnimationModel>(
+                AnimatedModelController<SomeAnimationModel>( // project://lib/pages/animations/animations.pug#24,7
                   duration: Duration(seconds: 1),
                   modelFn: model.createHeightAnimModel,
                   builder: (context, widget, anim) {
-                    return Column(
+                    return Column( 
                       children: __flatten([
-                        PlatformButton(
+                        PlatformButton( // project://lib/pages/animations/animations.pug#25,9
                           onPressed: () { anim.controller.forward(); },
-                          child: Text(
+                          child: Text( 
                             'forward'
                           )
                         ),
-                        PlatformButton(
+                        PlatformButton( // project://lib/pages/animations/animations.pug#26,9
                           onPressed: () { anim.controller.reverse(); },
-                          child: Text(
+                          child: Text( 
                             'reverse'
                           )
                         ),
-                        Container(
-                          child: Text(
+                        Container( // project://lib/pages/animations/animations.pug#27,9
+                          child: Text( 
                             'Current controller value2: ${anim.height.value}'
                           ),
                           margin: EdgeInsets.only(top: (anim.height.value).toDouble())
@@ -102,10 +102,10 @@ MaterialApp AnimationsPage({ model }) {
           }
         )
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton( // project://lib/pages/animations/animations.pug#30,4
         tooltip: 'Increment',
         onPressed: () { model.incrementCounter(); },
-        child: Icon(
+        child: Icon( // project://lib/pages/animations/animations.pug#34,5
           Icons.add
         )
       )

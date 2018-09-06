@@ -14,7 +14,7 @@ class TestApp extends StatelessWidget {
   final testModel = TestModel();
 
   @override
+  build(context) => HomePage(model: model);
   // build(context) => TestPage(model: testModel);
-  // build(context) => HomePage(model: model);
-  build(context) => AnimationsPage(model: model);
+  // build(context) => AnimationsPage(model: model);
 }
