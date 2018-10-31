@@ -1,19 +1,17 @@
-import(package='scoped_model/scoped_model.dart')
-import(package='tester/app-model.dart')
-import(package='tester/util/reactive-model.dart')
+import(file='home-model.dart')
+import(package='tester/util/reactive-widget.dart')
 
-home-page(flutter-view :model) // the first line is the flutter view method definition: HomePage(Model model)
-	material-app(title='Flutter Demo!')
-		scaffold(as='home')
-			app-bar(as='appBar')
-				#title(as='title') Welcome
-			center(as='body')
-				reactive(:model='model') // every time the model.notifyListener() is called, rebuild the content below.
-					.message You have pushed:
-						.counter ${model.counter} times
+home-page(flutter-view :model[HomePageModel]) // the first line is the flutter view method definition: HomePage(Model model)
+	scaffold
+		app-bar(as='appBar')
+			#title(as='title') Welcome
+			
+		center(as='body')
+			reactive(watch='model') // every time the model.notifyListener() is called, rebuild the message below.
+				.message You have pushed:
+					.counter ${model.counter} times
 
-			floating-action-button#btn(
-				as='floatingActionButton'
-				tooltip='Increment'
-				@on-pressed='model.incrementCounter()') // when this button is pressed, call model.incrementCounter()
-				icon(:value='Icons.add')
+		floating-action-button(
+			as='floatingActionButton'
+			@on-pressed='model.incrementCounter()') // when this button is pressed, call model.incrementCounter()
+			icon(:value='Icons.add')
