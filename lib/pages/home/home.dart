@@ -84,7 +84,7 @@ ReactiveWidget TaskEntry({ @required task, @required model }) {
         background: DefaultTextStyle.merge( 
           child: 
           //-- DISMISS ----------------------------------------------------------
-          Container( // project://lib/pages/home/home.pug#39,4
+          Container( // project://lib/pages/home/home.pug#40,4
             child: Text( 
               'Delete',
             ),
@@ -116,9 +116,14 @@ ReactiveWidget TaskEntry({ @required task, @required model }) {
                   decoration: model.taskTextDecoration(task),
                 ),
               ),
-              Checkbox( // project://lib/pages/home/home.pug#36,6
-                value: task.done,
-                onChanged: (checked) { model.onCheckPressed(task, checked); },
+
+              //-- ISDONE ----------------------------------------------------------
+              Container( // project://lib/pages/home/home.pug#36,6
+                child: Checkbox( // project://lib/pages/home/home.pug#37,7
+                  value: task.done,
+                  onChanged: (checked) { model.onCheckPressed(task, checked); },
+                ),
+                margin: EdgeInsets.only(right: 0),
               )
             ]),
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,30 +136,30 @@ ReactiveWidget TaskEntry({ @required task, @required model }) {
 
 // ignore: non_constant_identifier_names
 AlertDialog AddTaskDialog({ @required controller, @required onOk, @required onCancel }) {
-  return AlertDialog( // project://lib/pages/home/home.pug#43,2
+  return AlertDialog( // project://lib/pages/home/home.pug#44,2
     title: 
     //-- TITLE ----------------------------------------------------------
-    Container( // project://lib/pages/home/home.pug#44,3
+    Container( // project://lib/pages/home/home.pug#45,3
       child: Text( 
         'Add Task',
       ),
     ),
     content: 
     //-- CONTENT ----------------------------------------------------------
-    Container( // project://lib/pages/home/home.pug#45,3
-      child: TextField( // project://lib/pages/home/home.pug#46,4
+    Container( // project://lib/pages/home/home.pug#46,3
+      child: TextField( // project://lib/pages/home/home.pug#47,4
         autofocus: true,
         controller: controller,
       ),
     ),
     actions: [
-      FlatButton( // project://lib/pages/home/home.pug#48,4
+      FlatButton( // project://lib/pages/home/home.pug#49,4
         onPressed: () { onOk(); },
         child: Text( 
           'Ok',
         ),
       ),
-      FlatButton( // project://lib/pages/home/home.pug#49,4
+      FlatButton( // project://lib/pages/home/home.pug#50,4
         onPressed: () { onCancel(); },
         child: Text( 
           'Cancel',

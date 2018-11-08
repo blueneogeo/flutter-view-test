@@ -33,9 +33,10 @@ task-entry(flutter-view :task :model)
 				row
 					.title(:text-decoration='model.taskTextDecoration(task)') 
 						| ${task.name}
-					checkbox(
-						:^value='task.done'
-						:on-changed='(checked) { model.onCheckPressed(task, checked); }')
+					.isdone
+						checkbox(
+							:^value='task.done'
+							:on-changed='(checked) { model.onCheckPressed(task, checked); }')
 			.dismiss(as='background') Delete
 
 
